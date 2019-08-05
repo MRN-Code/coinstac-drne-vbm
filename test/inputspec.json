@@ -146,7 +146,7 @@
     "value": 0.05
   },
   "voxel_size": {
-    "value": 1.5
+    "value": 1.0
   }
 },
 {
@@ -400,7 +400,7 @@
     "value": 0.05
   },
   "voxel_size": {
-    "value": 1.5
+    "value": 1.0
   }
 },
 {
@@ -556,7 +556,7 @@
     "value": 0.05
   },
   "voxel_size": {
-    "value": 1.5
+    "value": 1.0
   }
 },
 {
@@ -768,7 +768,7 @@
     "value": 0.05
   },
   "voxel_size": {
-    "value": 1.5
+    "value": 1.0
   }
 }
 ]

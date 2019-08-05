@@ -99,7 +99,7 @@ def parse_covar_info(args):
 
     # Converting the contents to a dataframe
     covar_df = pd.DataFrame(covar_data[1:], columns=covar_data[0])
-    covar_df.set_index(covar_df.columns[0], inplace=True)
+    covar_df.set_index(covar_df.columns[1], inplace=True)
 
     # Selecting only the columns sepcified in the UI
     # TODO: This could be redundant (check with Ross)
