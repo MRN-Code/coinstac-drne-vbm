@@ -47,13 +47,13 @@ def local_0(args):
         "avg_nifti": "avg_nifti.nii",
         "computation_phase": "local_0"
     }
-    cache_dict = {"covariates": 'X_df', "voxel_size": voxel_size}
-
-    computation_output_dict = {
-        "output": output_dict,
-        "cache": cache_dict,
+    cache_dict = {
+        "covariates": 'X_df',
+        "voxel_size": voxel_size,
         "lambda": lamb
     }
+
+    computation_output_dict = {"output": output_dict, "cache": cache_dict}
 
     return json.dumps(computation_output_dict)
 
