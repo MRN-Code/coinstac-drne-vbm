@@ -104,15 +104,25 @@ def remote_1(args):
 
     dof_global = sum(count_y_local) - avg_beta_vector.shape[1]
 
+    np.save(
+        os.path.join(args["state"]["transferDirectory"],
+                     'avg_beta_vector.npy'), avg_beta_vector)
+    np.save(
+        os.path.join(args["state"]["transferDirectory"], 'mean_y_global.npy'),
+        mean_y_global)
+
+    np.save(
+        os.path.join(args["state"]["cacheDirectory"],
+                     'avg_beta_vector.npy'), avg_beta_vector)
+
     output_dict = {
-        "avg_beta_vector": avg_beta_vector.tolist(),
-        "mean_y_global": mean_y_global.tolist(),
+        "avg_beta_vector": 'avg_beta_vector.npy',
+        "mean_y_global": 'mean_y_global.npy',
         "computation_phase": "remote_1"
     }
 
     cache_dict = {
-        "avg_beta_vector": avg_beta_vector.tolist(),
-        "mean_y_global": mean_y_global.tolist(),
+        "avg_beta_vector": 'avg_beta_vector.npy',
         "dof_global": dof_global.tolist(),
         "X_labels": X_labels,
         "local_stats_dict": all_local_stats_dicts
@@ -170,6 +180,7 @@ def remote_2(args):
     cache_ = args["cache"]
     state_ = args["state"]
     input_dir = state_["baseDirectory"]
+    cache_dir = state_["cacheDirectory"]
 
     input_list = dict()
     site_list = args["input"].keys()
@@ -184,9 +195,12 @@ def remote_2(args):
 
     all_local_stats_dicts = cache_["local_stats_dict"]
 
-    avg_beta_vector = cache_list["avg_beta_vector"]
+#    avg_beta_vector = cache_list["avg_beta_vector"]
+#    dof_global = cache_list["dof_global"]
+    
+    avg_beta_vector = np.load(os.path.join(cache_dir, cache_list["avg_beta_vector"]))
     dof_global = cache_list["dof_global"]
-
+    
     SSE_global = sum(
         [np.array(input_list[site]["SSE_local"]) for site in input_list])
     SST_global = sum(
@@ -198,7 +212,7 @@ def remote_2(args):
     r_squared_global = 1 - (SSE_global / SST_global)
     MSE = SSE_global / np.array(dof_global)
     ts_global = remote_stats(MSE, varX_matrix_global,
-                             np.array(avg_beta_vector))
+                             avg_beta_vector)
     ps_global = [
         2 * stats.t.sf(np.abs(t), df) for t, df in zip(ts_global, dof_global)
     ]

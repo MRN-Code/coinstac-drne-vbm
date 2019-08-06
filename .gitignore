@@ -7,3 +7,4 @@ test/transfer
 test/cache
 **/mask.nii
 **/mni_downsampled.nii
+**/*.npy

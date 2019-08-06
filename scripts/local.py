@@ -148,14 +148,20 @@ def local_2(args):
     biased_X = np.load(os.path.join(cache_dir, cache_["covariates"]))
     y = np.load(os.path.join(cache_dir, cache_["dependents"]))
 
-    avg_beta_vector = input_["avg_beta_vector"]
-    mean_y_global = input_["mean_y_global"]
+    #    avg_beta_vector = input_["avg_beta_vector"]
+    #    mean_y_global = input_["mean_y_global"]
+
+    avg_beta_vector = np.load(
+        os.path.join(args["state"]["baseDirectory"],
+                     input_["avg_beta_vector"]))
+
+    mean_y_global = np.load(
+        os.path.join(args["state"]["baseDirectory"], input_["mean_y_global"]))
 
     varX_matrix_local = multiply(biased_X, biased_X)
 
-    sse_local, sst_local = stats_calculation(biased_X, y,
-                                             np.array(avg_beta_vector),
-                                             np.array(mean_y_global))
+    sse_local, sst_local = stats_calculation(biased_X, y, avg_beta_vector,
+                                             mean_y_global)
 
     output_dict = {
         "SSE_local": sse_local.tolist(),
