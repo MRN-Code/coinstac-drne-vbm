@@ -50,7 +50,7 @@ def nifti_to_data(args, X):
     """Read nifti files as matrices
     """
     pool = multiprocessing.Pool()
-    y = pool.starmap(read_multi, [(args, X, image) for image in X.index])
+    y = [pool.apply(read_multi, args=(args, X, image)) for image in X.index]
     pool.close()
 
     return np.array(y)
